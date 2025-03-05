@@ -7,8 +7,15 @@ import spring.basic.member.MemberRepository;
 import spring.basic.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    // 객체의 생성과 주입 책임은 AppConfig에 위임(SRP)
+    // 실행만 담당
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+    // 생성자 주입
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     /*
     * 주문 생성이 되면 먼저 회원 정보 조회를 하고, 할인

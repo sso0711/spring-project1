@@ -2,8 +2,13 @@ package spring.basic.member;
 
 public class MemberServiceImpl implements MemberService {
 
-    // 인터페이스와 구현체 모두에 의존!! (DIP 위반)
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    // 객체의 생성과 주입 책임은 AppConfig에 위임(SRP)
+    // 실행만 담당
+    private final MemberRepository memberRepository;
+    // 생성자 주입
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public void join(Member member) {
